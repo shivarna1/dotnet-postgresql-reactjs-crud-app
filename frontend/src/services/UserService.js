@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const USER_API_BASE_URL = "http://localhost:9080/api/v1/users";
+const USER_API_BASE_URL = "http://13.235.73.213:9080/api/v1/users";
 
 class UserService {
 

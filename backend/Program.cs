@@ -12,22 +12,23 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddDbContext<DataContext>();
     services.AddCors(options =>
     {
-        options.AddPolicy("AllowAll", builder =>
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader());
+        // Define a CORS policy to allow requests from any origin
+        options.AddPolicy("AllowAll", policy =>
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader());
     });
     services.AddControllers().AddJsonOptions(x =>
     {
-        // Serialize enums as strings in API responses (e.g., Role)
+        // Serialize enums as strings in API responses
         x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 
-        // Ignore omitted parameters on models to enable optional params (e.g., User update)
+        // Ignore null values in JSON responses
         x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
     services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-    // Configure DI for application services
+    // Register application services for dependency injection
     services.AddScoped<IUserService, UserService>();
 }
 
@@ -35,15 +36,16 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline
 {
-    // Use the CORS policy "AllowAll"
+    // Use the "AllowAll" CORS policy
     app.UseCors("AllowAll");
 
-    // Global error handler
+    // Use a global error handler
     app.UseMiddleware<ErrorHandlerMiddleware>();
 
+    // Map controller endpoints
     app.MapControllers();
 }
 
-// Run the application without a hardcoded URL
-app.Run();
+// Configure the app to listen on all network interfaces
+app.Run("http://0.0.0.0:9080");
 
