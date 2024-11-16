@@ -57,7 +57,7 @@ cd /etc/postgresql/16/main
 dotnet build
 dotnet run
 ```
-# postgres logs:-
+# Postgres logs:-
 ```
 $ cd /var/log/postgresql 
 $ cat postgresql-16-main.log
