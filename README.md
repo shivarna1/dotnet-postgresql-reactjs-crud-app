@@ -39,6 +39,7 @@ vim appsettings.json
   }
 }
 ```
+# Postgresql
 ```
 cd /etc/postgresql/16/main
   $ sudo vim postgresql.conf 
