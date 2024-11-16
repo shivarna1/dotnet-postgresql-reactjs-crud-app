@@ -7,7 +7,7 @@ vim /home/ubuntu/dotnet-postgresql-reactjs-crud-app/frontend/src/services
   npm install
   npm start
 
------------------------------------------------------------------------------------------------
+
 backend:-
 vim appsettings.json
 '''
