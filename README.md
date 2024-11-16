@@ -4,7 +4,7 @@ A CRUD application using .NET for the backend, PostgreSQL as the database, and R
 ### Setup Instructions
 # Clone the Repository
 ```
-git clone git@github.com:shivarna1/dotnet-postgresql-reactjs-crud-app.git
+git clone https://github.com/shivarna1/dotnet-postgresql-reactjs-crud-app.git
 cd dotnet-postgresql-reactjs-crud-app
 ```
 
