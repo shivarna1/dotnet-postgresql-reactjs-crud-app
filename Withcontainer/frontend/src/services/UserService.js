@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-const USER_API_BASE_URL = "http://mydotnet:9080/api/v1/users";  // Use the service name (mydotnet)
+const USER_API_BASE_URL = "http://" + window.location.hostname + ":9080/api/v1/users";
+//const USER_API_BASE_URL = "http://13.233.134.198:9080/api/v1/users";
 
-// const USER_API_BASE_URL = "http://13.235.73.213:9080/api/v1/users";
+console.log("API Base URL:", USER_API_BASE_URL);
+
 class UserService {
 
     getUsers(){

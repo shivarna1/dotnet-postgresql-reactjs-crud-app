@@ -19,11 +19,11 @@ WORKDIR /app
 # Copy the published application from the build stage
 COPY --from=build /app/publish .
 
-# Expose the port the app will run on (5000 in your case)
-EXPOSE 5000
+# Expose the port the app will run on (9080 in your case)
+EXPOSE 9080
 
 # Set the ASP.NET Core URL environment variable
-ENV ASPNETCORE_URLS=http://*:5000
+ENV ASPNETCORE_URLS=http://*:9080
 
 # Run the application (replace with your actual DLL name)
 CMD ["dotnet", "WebApi.dll"]
