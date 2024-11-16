@@ -8,7 +8,7 @@ git clone git@github.com:shivarna1/dotnet-postgresql-reactjs-crud-app.git
 cd dotnet-postgresql-reactjs-crud-app
 ```
 
-# Clone repo
+
 # frontend:-
 ```
 vim /home/ubuntu/dotnet-postgresql-reactjs-crud-app/frontend/src/services`
