@@ -10,6 +10,7 @@ vim /home/ubuntu/dotnet-postgresql-reactjs-crud-app/frontend/src/services
 -----------------------------------------------------------------------------------------------
 backend:-
 vim appsettings.json
+'''
 {
   "Logging": {
     "LogLevel": {
@@ -25,6 +26,7 @@ vim appsettings.json
     "Port": "9080"
   }
 }
+'''
 -----------------------------------------------------------------------------------------------------
 cd /etc/postgresql/16/main
 $ sudo vim postgresql.conf 
