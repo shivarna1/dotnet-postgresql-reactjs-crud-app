@@ -1,7 +1,7 @@
-Clone repo
+### Clone repo
 frontend:-
 
-vim /home/ubuntu/dotnet-postgresql-reactjs-crud-app/frontend/src/services
+`vim /home/ubuntu/dotnet-postgresql-reactjs-crud-app/frontend/src/services`
   const USER_API_BASE_URL = "http://3.108.254.229:9080/api/v1/users";  //publicIP
 
   npm install
