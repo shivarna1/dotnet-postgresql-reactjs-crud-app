@@ -29,11 +29,11 @@ vim appsettings.json
   }
 }
 ```
------------------------------------------------------------------------------------------------------
+```
 cd /etc/postgresql/16/main
-$ sudo vim postgresql.conf 
+> $ sudo vim postgresql.conf 
   listen_addresses = '*'		# what IP address(es) to listen on;
-$ sudo vim  pg_hba.conf
+> $ sudo vim  pg_hba.conf
 
   # IPv4 local connections:
   host    all             all             0.0.0.0/0               md5
@@ -41,7 +41,7 @@ $ sudo vim  pg_hba.conf
   host    replication     all             0.0.0.0/0               md5
 
  $ sudo systemctl restart postgres 
------------------------------------------------------------------------------------------------------
+```
 
 dotnet build
 dotnet run
