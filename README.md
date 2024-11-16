@@ -57,14 +57,16 @@ cd /etc/postgresql/16/main
 dotnet build
 dotnet run
 ```
-# If any issue then show logs:-
+# postgres logs:-
 ```
 $ cd /var/log/postgresql 
 $ cat postgresql-16-main.log
 ```
+# 
 ```
 pm2 start npm --name "react" -- start
 ```
+#
 ```
 git remote set-url origin git@github.com:shivarna1/dotnet-postgresql-reactjs-crud-app.git
 ```
