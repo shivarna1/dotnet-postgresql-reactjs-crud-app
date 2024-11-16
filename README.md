@@ -50,10 +50,11 @@ cd /etc/postgresql/16/main
 dotnet build
 dotnet run
 ```
-If any issue then show logs:-
+# If any issue then show logs:-
+```
 $ cd /var/log/postgresql 
 $ cat postgresql-16-main.log
-
+```
 # dotnet-postgresql-reactjs-crud-app
 pm2 start npm --name "react" -- start
 
