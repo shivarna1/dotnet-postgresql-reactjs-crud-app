@@ -1,4 +1,7 @@
-### Clone repo
+### dotnet-postgresql-reactjs-crud-app
+A CRUD application using .NET for the backend, PostgreSQL as the database, and React.js for the frontend.
+
+# Clone repo
 # frontend:-
 ```
 vim /home/ubuntu/dotnet-postgresql-reactjs-crud-app/frontend/src/services`
