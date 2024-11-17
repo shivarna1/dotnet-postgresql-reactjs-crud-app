@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydotnet
+  labels:
+    app: mydotnet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mydotnet
+  template:
+    metadata:
+      labels:
+        app: mydotnet
+    spec:
+      containers:
+      - name: dotnet
+        image: mydotnet:latest
+        ports:
+        - containerPort: 9080
+        env:
+        - name: ASPNETCORE_URLS
+          value: "${ASPNETCORE_URLS}"
+        - name: ConnectionStrings__ApiDatabase
+          value: "${CONNECTION_STRING}" # Use a ConfigMap/Secret if needed
+

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myreact
+  labels:
+    app: myreact
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myreact
+  template:
+    metadata:
+      labels:
+        app: myreact
+    spec:
+      containers:
+      - name: react
+        image: myreact:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_API_BASE_URL
+          value: "${REACT_APP_API_BASE_URL}" # Use a ConfigMap/Secret if needed
+
