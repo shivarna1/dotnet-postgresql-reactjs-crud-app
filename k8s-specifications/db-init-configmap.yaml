@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-init-configmap
+data:
+  db-init.sql: |
+    CREATE TABLE IF NOT EXISTS public.users
+    (
+        id serial primary key,
+        email VARCHAR(40) not null,
+        first_name VARCHAR(40) not null,
+        last_name VARCHAR(40) not null
+    );
+
+    INSERT INTO public.users (email, first_name, last_name)
+    VALUES 
+        ('shivmodi6@gmail.com', 'Shiv', 'Modi'),
+        ('jane.smith@example.com', 'Jane', 'Smith'),
+        ('alex.jones@example.com', 'Alex', 'Jones'),
+        ('emily.watson@example.com', 'Emily', 'Watson'),
+        ('michael.brown@example.com', 'Michael', 'Brown');
+
