@@ -1,33 +1,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: mypostgres
   labels:
-    app: db
-  name: db
+    app: mypostgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db
+      app: mypostgres
   template:
     metadata:
       labels:
-        app: db
+        app: mypostgres
     spec:
       containers:
-      - image: postgres:15-alpine
-        name: postgres
-        env:
-        - name: POSTGRES_USER
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: postgres
+      - name: postgres
+        image: postgres:15-alpine
         ports:
         - containerPort: 5432
-          name: postgres
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: db-data
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d/db-init.sql
+          subPath: db-init.sql
       volumes:
-      - name: db-data
-        emptyDir: {} 
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+      - name: init-script
+        configMap:
+          name: db-init-configmap
