@@ -3,67 +3,67 @@ version: '3.9'
 services:
   # PostgreSQL database service
   mypostgres:
-    image: postgres:15 # Specifies the PostgreSQL version to use
-    container_name: mypostgres # Name of the container for easy identification
+    image: postgres:15                                          # Specifies the PostgreSQL version to use
+    container_name: mypostgres                                  # Name of the container for easy identification
     environment:
-      POSTGRES_USER: ${POSTGRES_USER} # Username for the PostgreSQL database
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # Password for the PostgreSQL database
-      POSTGRES_DB: ${POSTGRES_DB} # Database name to be created on startup
+      POSTGRES_USER: ${POSTGRES_USER}                           # Username for the PostgreSQL database
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}                   # Password for the PostgreSQL database
+      POSTGRES_DB: ${POSTGRES_DB}                               # Database name to be created on startup
     ports:
-      - "5432:5432" # Maps PostgreSQL port 5432 inside the container to 5433 on the host
+      - "5432:5432"                                             # Maps PostgreSQL port 5432 inside the container to 5433 on the host
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Persistent storage for PostgreSQL data
-      - ./db-init.sql:/docker-entrypoint-initdb.d/db-init.sql # Initializes the database with a SQL script
+      - postgres_data:/var/lib/postgresql/data                  # Persistent storage for PostgreSQL data
+      - ./db-init.sql:/docker-entrypoint-initdb.d/db-init.sql   # Initializes the database with a SQL script
     networks:
-      - app_network # Connects to the shared application network
+      - app_network                                             # Connects to the shared application network
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "admin"] # Checks if PostgreSQL is ready to accept connections
-      interval: 10s # Time between health check attempts
-      timeout: 5s # Maximum time for a health check
-      retries: 5 # Number of retries before marking as unhealthy
-      start_period: 60s # Time to wait before starting health checks
-    restart: always # Ensures the service restarts on failure or system reboot
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]     # Checks if PostgreSQL is ready to accept connections
+      interval: 10s                                             # Time between health check attempts
+      timeout: 5s                                               # Maximum time for a health check
+      retries: 5                                                # Number of retries before marking as unhealthy
+      start_period: 60s                                         # Time to wait before starting health checks
+    restart: always                                             # Ensures the service restarts on failure or system reboot
 
   # ASP.NET Core backend service
   mydotnet:
     build:
-      context: ./backend # Build context points to the backend directory
-      dockerfile: Dockerfile # Specifies the Dockerfile for the backend
-    container_name: mydotnet # Name of the container for the backend
+      context: ./backend                                        # Build context points to the backend directory
+      dockerfile: Dockerfile                                    # Specifies the Dockerfile for the backend
+    container_name: mydotnet                                    # Name of the container for the backend
     ports:
-      - "9080:9080" # Maps the backend port 9080 inside the container to 9080 on the host
+      - "9080:9080"                                             # Maps the backend port 9080 inside the container to 9080 on the host
     environment:
-      ASPNETCORE_URLS: ${ASPNETCORE_URLS} # Configures ASP.NET Core URLs
-      ConnectionStrings__ApiDatabase: ${CONNECTION_STRING} # Sets the connection string for the database
+      ASPNETCORE_URLS: ${ASPNETCORE_URLS}                       # Configures ASP.NET Core URLs
+      ConnectionStrings__ApiDatabase: ${CONNECTION_STRING}      # Sets the connection string for the database
     depends_on:
-      - mypostgres # Ensures PostgreSQL starts before the backend
+      - mypostgres                                              # Ensures PostgreSQL starts before the backend
     networks:
-      - app_network # Connects to the shared application network
+      - app_network                                             # Connects to the shared application network
 
   # React frontend service
   myreact:
     build:
-      context: ./frontend # Build context points to the frontend directory
-      dockerfile: Dockerfile # Specifies the Dockerfile for the frontend
-    container_name: myreact # Name of the container for the frontend
+      context: ./frontend                                       # Build context points to the frontend directory
+      dockerfile: Dockerfile                                    # Specifies the Dockerfile for the frontend
+    container_name: myreact                                     # Name of the container for the frontend
     ports:
-      - "3000:3000" # Maps the frontend port 3000 inside the container to 3000 on the host
+      - "3000:3000"                                             # Maps the frontend port 3000 inside the container to 3000 on the host
     environment:
-      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL} # Sets the base URL for the API calls
+      REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}         # Sets the base URL for the API calls
     depends_on:
-      - mydotnet # Ensures the backend starts before the frontend
+      - mydotnet                                                # Ensures the backend starts before the frontend
     networks:
-      - app_network # Connects to the shared application network
-    restart: always # Ensures the service restarts on failure or system reboot
+      - app_network                                             # Connects to the shared application network
+    restart: always                                             # Ensures the service restarts on failure or system reboot
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"] # Checks if the frontend is up
-      interval: 10s # Time between health check attempts
-      timeout: 5s # Maximum time for a health check
-      retries: 5 # Number of retries before marking as unhealthy
+      interval: 10s                                             # Time between health check attempts
+      timeout: 5s                                               # Maximum time for a health check
+      retries: 5                                                # Number of retries before marking as unhealthy
 
 networks:
   app_network:
-    driver: bridge # Uses the default bridge network driver for inter-container communication
+    driver: bridge                                              # Uses the default bridge network driver for inter-container communication
 
 volumes:
-  postgres_data: # Volume for persisting PostgreSQL data
+  postgres_data:                                                # Volume for persisting PostgreSQL data
